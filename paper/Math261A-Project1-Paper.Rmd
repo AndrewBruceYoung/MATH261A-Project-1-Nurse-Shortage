@@ -1,0 +1,54 @@
+---
+title: "California Registered Nurse Shortages: Does Population Predict Gap Percentage?"
+author: "Andrew Young"
+date: "`2025-09-23`"
+output:
+  pdf_document: default
+  html_document: default
+geometry: margin=1in
+fontsize: 11pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Abstract
+
+
+---
+
+# Introduction
+
+
+---
+
+# Data
+
+
+---
+
+# Methods
+
+
+---
+
+# Results
+
+
+---
+
+# Discussion
+
+
+---
+
+# Conclusion
+
+
+---
+
+# References
+
+
+
