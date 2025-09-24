@@ -21,3 +21,17 @@ cleaned_data <- df %>%
 m1 <- lm(gap_pct ~ est_population, data = cleaned_data)
 summary(m1)
 glance(m1)
+
+# plot scatter plot along with linear regression line
+ggplot(cleaned_data, aes(x = est_population, y = gap_pct)) +
+  geom_point(alpha = 0.85) +
+  geom_smooth(method = "lm", se = TRUE) +
+  scale_x_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  labs(
+    title = "RN Shortage Gap Percentage vs Population",
+    x = "Population",
+    y = "RN Gap Percent"
+  ) +
+  theme_minimal()
