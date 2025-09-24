@@ -20,6 +20,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
+Nurses are a critically important part of California’s health-care workforce, and staffing shortfalls have gotten increased attention from the public since the COVID-19 pandemic. In an effort to guide planning, California has identified something they call Registered Nurse Shortage Areas (RNSAs) and reports a projected “gap percentage” that compares nurse supply to demand.
+
+My paper aims to better understand this information, and asks the question, "Does population size predict the RN shortage gap percentage across California’s counties?" Communities with greater population numbers might benefit from a larger pool of people from training programs, bigger hospital systems, and deeper labor markets while smaller or rural areas might face recruitment and retention challenges.
+
+To address this, I analyzed the 2025 California RNSA dataset provided by CA.gov and fit a simple linear regression with RN shortage gap percentage as the outcome and estimated population as the predictor. The results show a positive association between population and the gap percentage, but the effect is modest and leaves substantial unexplained variation, indicating other factors are likely more influential.
+
+My analysis found a light positive association: for every additional one million residents, the gap increases by about +10.4 percentage points, indicating that more populous areas tend to have less severe shortages on average. However, the model explains only about 8% of the variation, so population by itself seems to be an incomplete predictor of local RN needs. This matters for policy because it suggests that interventions for this problem can look to population as a lightly guiding metric, there are more variables that can be taking effect on this gap. The rest of the paper proceeds as follows: the Data section describes variables and cleaning, Methods states the regression model and assumptions, Results presents estimates and the fitted plot, Discussion interprets findings and limitations, and Conclusion summarizes implications and next steps.
 
 ---
 
