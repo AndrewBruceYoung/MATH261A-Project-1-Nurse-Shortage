@@ -26,11 +26,14 @@ README.md
 
 .gitignore
 
-External Sources I used:
+### External Sources
+
 https://data.ca.gov/dataset/registered-nurse-shortage-areas-in-california # for data
 
 https://www.rdocumentation.org/ # for coding help
 
 https://stackoverflow.com/questions # for coding help
 
-License statement: The dataset is provided via the California Open Data Portal, which lists a license for each resource on the landing page.
+### License statement
+
+The dataset is provided via the California Open Data Portal, which lists a license for each resource on the landing page.
