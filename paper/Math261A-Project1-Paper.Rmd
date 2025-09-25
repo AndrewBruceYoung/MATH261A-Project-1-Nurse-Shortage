@@ -202,3 +202,6 @@ To further examine robustness and improve fit, I decided on two possible extensi
 
 Department of Health Care Access and Information (HCAI). (2025). Registered Nurse Shortage Areas in California. California Open Data Portal. https://data.ca.gov/dataset/registered-nurse-shortage-areas-in-california
 
+RDocumentation. (2025). RDocumentation. https://www.rdocumentation.org/
+
+Stack Overflow. (2025). Stack Overflow — Questions. https://stackoverflow.com/questions
