@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Nurses are a critically important part of California’s health-care workforce, and staffing shortages have gotten increased attention from the public since the COVID-19 pandemic. In an effort to guide planning, California has identified something they call Registered Nurse Shortage Areas (RNSAs) and reports a projected “gap percentage” that compares nurse supply to demand.
 
-My paper aims to better understand this information, and asks the question, "Can population size predict the RN shortage gap percentage across California’s counties?" Communities with greater population numbers might benefit from a larger pool of people from training programs, bigger hospital systems, and deeper labor markets while smaller or rural areas might face recruitment and retention challenges.
+My paper aims to better understand this information, and asks the question, "Can population size predict the projected RN shortage gap percentage across California’s counties?" Communities with greater population numbers might benefit from a larger pool of people from training programs, bigger hospital systems, and deeper labor markets while smaller or rural areas might face recruitment and retention challenges.
 
 To address this, I analyzed the 2025 California RNSA dataset provided by CA.gov and fit a simple linear regression with RN shortage gap percentage as the outcome and estimated population as the predictor. The results show a positive association between population and the gap percentage, but the effect is modest and leaves substantial unexplained variation, indicating other factors are likely more influential.
 
@@ -38,7 +38,9 @@ Variables used:
 
 Est. Population (renamed to est_population): estimated 2025 population in county.
 
-Gap % (renamed to gap_pct): the RN shortage gap percentage, defined by this equation: ((supply - demand)/demand) * 100. Negative values mean there is a shortage, positive values mean there is a surplus.
+Gap % (renamed to gap_pct): the RN shortage gap percentage, defined by this equation: 
+((supply - demand)/demand) * 100
+Negative values mean there is a shortage, positive values mean there is a surplus.
 
 Supply: numerical amount designating how many RNs a county has, designated by the HCAI
 
@@ -46,7 +48,7 @@ Demand: numerical amount designating how much need there are for RNs in a county
 
 County: name of county (or LA Service Planning Area (SPA)) where information was gathered from
 
-Only est_population and gap_pct enter the regression, the others variables listed here provide context and potential checks.
+Only est_population and gap_pct enter the regression, the others variables listed here provide context and possible checks.
 
 Collection and transformations:
 
@@ -66,6 +68,54 @@ The estimated population of each county varies greatly, from some with about 100
 
 # Methods
 
+I studied the association between population size and projected RN shortage severity using an ordinary least squares simple linear regression. Let:
+
+Y_i = RN shortage gap percentage for area i
+
+X_i = estimated 2025 population for area i
+
+B_0 = intercept
+
+B_1 = slope (expected change in gap percentage for a one person increase in population)
+
+E_i = random error for area i
+
+With all of these, the model would be:
+
+Y_i = B_0 + B_1(X_i) + E_i
+
+Since we are dealing with potentially millions of people, for interpretation I also report B_1 per 1,000,000 people by multiplying the estimated slope by 10^6.
+
+Justification and modeling decisions.
+I felt that a bivariate OLS model would be appropriate for this projects goal of demonstrating and interpreting a simple linear relationship. I used population as the explanatory variable because it is an incredibly policy relevant factor that could possibly relate to nurse availability and demand. Because the population spans such different and large values, I presented the slope per 1,000,000 people for readability. I chose not to remove observations that were deemed outliers as I felt that this preserves reproducibility and avoids some post-hoc problems.
+
+Assumptions:
+
+All the standard linear model assumptions apply here: Linearity, independence, homoskedasticity, and normality of errors. On top of those standards, I assume that any errors that come from the fact that the data is projected is small and roughly unbiased. I also included LA SPAs as their own areas due to their population size, and by doing this I am assuming the areas are independent from each other.
+
+Diagnostics and validation steps:
+
+After making my model, I assessed assumptions using two diagnostic plots: Residuals vs Fitted (which examines linearity and equal variance) and Normal Q-Q (which examines normality)
+
+Potential limitations and pitfalls.
+
+1. The data are projections for 2025, not actually collected counts.
+
+2. A single predictor almost certainly cannot fully explain what goes on behind these scenes for supply and demand of RNs, as there are many other factors that can go into affecting these needs (wages, amount of nearby hospitals, education).
+
+3. If for whatever reason the LA SPAs are not independent from one another, this could affect my results and output.
+
+Software and implementation.
+
+All analyses were performed in R using readr and janitor for import/cleaning, dplyr for wrangling, ggplot2 for the scatterplot with a fitted line, broom for tidy model summaries, and scales for axis labels.
+
+Possible extensions:
+
+To further examine robustness and improve fit, I decided on two possible extensions that could be done:
+
+1. Re-fit with log(population) as the predictor to address possible curvature that may come from very large areas
+
+2. A counties-only model that excludes LA SPAs to examine the effect they may have when treated as a single county
 
 ---
 
