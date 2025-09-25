@@ -20,9 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-Nurses are a critically important part of California’s health-care workforce, and staffing shortfalls have gotten increased attention from the public since the COVID-19 pandemic. In an effort to guide planning, California has identified something they call Registered Nurse Shortage Areas (RNSAs) and reports a projected “gap percentage” that compares nurse supply to demand.
+Nurses are a critically important part of California’s health-care workforce, and staffing shortages have gotten increased attention from the public since the COVID-19 pandemic. In an effort to guide planning, California has identified something they call Registered Nurse Shortage Areas (RNSAs) and reports a projected “gap percentage” that compares nurse supply to demand.
 
-My paper aims to better understand this information, and asks the question, "Does population size predict the RN shortage gap percentage across California’s counties?" Communities with greater population numbers might benefit from a larger pool of people from training programs, bigger hospital systems, and deeper labor markets while smaller or rural areas might face recruitment and retention challenges.
+My paper aims to better understand this information, and asks the question, "Can population size predict the RN shortage gap percentage across California’s counties?" Communities with greater population numbers might benefit from a larger pool of people from training programs, bigger hospital systems, and deeper labor markets while smaller or rural areas might face recruitment and retention challenges.
 
 To address this, I analyzed the 2025 California RNSA dataset provided by CA.gov and fit a simple linear regression with RN shortage gap percentage as the outcome and estimated population as the predictor. The results show a positive association between population and the gap percentage, but the effect is modest and leaves substantial unexplained variation, indicating other factors are likely more influential.
 
@@ -32,6 +32,35 @@ My analysis found a light positive association: for every additional one million
 
 # Data
 
+In the data set that I working with, the observational units are California counties. The raw 2025 Registered Nurse Shortage Areas file contains 66 rows, and after some basic cleaning and removal of one record with missing values, the data set ended up with 65 usable rows. Each row represents one county area in 2025.
+
+Variables used:
+
+Est. Population (renamed to est_population): estimated 2025 population in county.
+
+Gap % (renamed to gap_pct): the RN shortage gap percentage, defined by this equation: ((supply - demand)/demand) * 100. Negative values mean there is a shortage, positive values mean there is a surplus.
+
+Supply: numerical amount designating how many RNs a county has, designated by the HCAI
+
+Demand: numerical amount designating how much need there are for RNs in a county, designated by the HCAI
+
+County: name of county (or LA Service Planning Area (SPA)) where information was gathered from
+
+Only est_population and gap_pct enter the regression, the others variables listed here provide context and potential checks.
+
+Collection and transformations:
+
+As to how this data set was collected, it was not, this data set is a state projection for 2025, produced from an RN supply–demand model by the Department of Health Care Access and Information (HCAI). This means that my results speak on what is projected by the HCAI to occur this year, and because of this there might be some discrepancies to what happens in reality. I displayed my work in transforming the raw data into something usable for analysis in the steps below:
+
+1. Standardized column names so they were easier to work with
+
+2. Removed empty extra columns present in the CSV file
+
+3. Changed the strings that were present in the gap_percent column, such as “-15.1%”, to numeric
+
+Key characteristics:
+
+The estimated population of each county varies greatly, from some with about 1000 residents to several million in the largest. The Gap_pct variable is similar, spanning from -80% in some counties to +100% in others. This wide spread explains why a single predictor may only partially account for variation in shortage severity.
 
 ---
 
