@@ -12,11 +12,11 @@ This project explores whether population size predicts the projected RN shortage
 
 analysis/
 - Math261A-Project1-Analysis.R # data import, cleaning, model fit, plots
-- 
+
 data/
 - 2025-registered-nurse-shortage-areas-raw.csv # raw data file acquired from CA.gov
 - 2025-registered-nurse-shortage-areas-cleaned.csv # cleaned data file
-- 
+
 paper/
 - Math261A-Project1-Paper.Rmd # paper source
 - Math261A-Project1-Paper.pdf # knitted paper 
