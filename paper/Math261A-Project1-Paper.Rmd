@@ -1,10 +1,13 @@
 ---
 title: "California Registered Nurse Shortages: Does Population Predict Gap Percentage?"
 author: "Andrew Young"
+thanks: "Project repository available at: [https://github.com/AndrewBruceYoung/MATH261A-Project-1-Nurse-Shortage](https://github.com/AndrewBruceYoung/MATH261A-Project-1-Nurse-Shortage)."
 date: "`2025-09-23`"
 output:
   pdf_document: default
   html_document: default
+header-includes:
+  - \usepackage{float}
 geometry: margin=1in
 fontsize: 11pt
 ---
@@ -41,7 +44,7 @@ Est. Population (renamed to est_population): estimated 2025 population in county
 
 Gap % (renamed to gap_pct): the RN shortage gap percentage, defined by this equation: 
 
-((supply - demand)/demand) * 100
+$((supply - demand)/demand) * 100$
 
 Negative values mean there is a shortage, positive values mean there is a surplus.
 
@@ -98,21 +101,21 @@ cleaned_data |>
 
 I studied the association between population size and projected RN shortage severity using an ordinary least squares simple linear regression. Let:
 
-Y_i = RN shortage gap percentage for area i
+$Y_i$ = RN shortage gap percentage for area i
 
-X_i = estimated 2025 population for area i
+$X_i$ = estimated 2025 population for area i
 
-B_0 = intercept
+$\beta_0$ = intercept
 
-B_1 = slope (expected change in gap percentage for a one person increase in population)
+$\beta_1$ = slope (expected change in gap percentage for a one person increase in population)
 
-E_i = random error for area i
+$\epsilon_i$ = random error for area i
 
 With all of these, the model would be:
 
-Y_i = B_0 + B_1(X_i) + E_i
+$Y_i$ = $\beta_0$ + $\beta_1$($X_i$) + $\epsilon_i$
 
-Since we are dealing with potentially millions of people, for interpretation I also report B_1 per 1,000,000 people by multiplying the estimated slope by 10^6.
+Since we are dealing with potentially millions of people, for interpretation I also report $\beta_1$ per 1,000,000 people by multiplying the estimated slope by $10^6$.
 
 Justification and modeling decisions:
 
@@ -124,11 +127,11 @@ All the standard linear model assumptions apply here: Linearity, independence, h
 
 **Diagnostics and validation steps:**
 
-After making my model, I assessed assumptions using two diagnostic plots: Residuals vs Fitted (which examines linearity and equal variance) and Normal Q-Q (which examines normality)
+After making my model, I assessed assumptions using two diagnostic plots: Residuals vs Fitted (which examines linearity and equal variance) and Normal Q-Q (which examines normality) in an effort to look deeper into how this model holds up with the assumptions of simple linear regression that we want to abide by.
 
-Software and implementation.
+***Software and implementation.***
 
-All analyses were performed in R using readr and janitor for import/cleaning, dplyr for wrangling, ggplot2 for the scatterplot with a fitted line, broom for tidy model summaries, and scales for axis labels.
+All analyses were performed in R using readr and janitor for import/cleaning, dplyr for wrangling, ggplot2 for the scatter plot with a fitted line, broom for tidy model summaries, and scales for axis labels.
 
 ---
 
@@ -138,7 +141,7 @@ All analyses were performed in R using readr and janitor for import/cleaning, dp
 
 After fitting an OLS regression of RN shortage gap percentage on population, I ended up with this plot and regression line:
 
-```{r fig-scatter, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 1. RN Shortage Gap vs Population with OLS fit and 95% band.", fig.pos='H', fig.width=6.2, fig.height=3.8}
+```{r fig-scatter, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="RN Shortage Gap vs Population with OLS fit and 95% band", fig.pos='H', fig.align='center', out.width='78%', fig.width=6, fig.height=3}
 
 library(ggplot2); 
 library(scales)
@@ -151,7 +154,7 @@ ggplot(cleaned_data, aes(x = est_population, y = gap_pct)) +
   theme_minimal()
 ```
 
-The estimated slope ended up being statistically different from zero at the 5% level, with a p-value = .0216, with +10.4 percentage points per +1,000,000 people. The intercept is about -23.3 and is not too meaningful in this case as it relates to a population of 0. The model fit was modest with an R^2 of 0.081 and an Adj. R^2 of 0.06, and the residual standard error is roughly 27 percent. The fitted scatterplot shows a slight upward trend with wide spread that increases the larger the population
+The estimated slope ended up being statistically different from zero at the 5% level, with a p-value = .0216, with +10.4 percentage points per +1,000,000 people. The intercept is about -23.3 and is not too meaningful in this case as it relates to a population of 0. The model fit was modest with an $R^2$ of 0.081 and an Adj. $R^2$ of 0.06, and the residual standard error is roughly 27 percent. The fitted scatterplot shows a slight upward trend with wide spread that increases the larger the population
 
 **Plain-English interpretation:**
 
@@ -163,30 +166,26 @@ My original question was whether population size predicts the projected RN short
 
 **Diagnostics:**
 
-As stated before, two diagnostic checks were used. My Residuals vs Fitted plot ended up showing no strong curvature, suggesting that using a linear form  to represent their relationship is reasonable. However, there is a slight increase in residual spread at higher fitted values. You can see this plot below:
+As stated before, two diagnostic checks were used. My Residuals vs Fitted plot ended up showing no strong curvature, suggesting that using a linear form to represent their relationship is reasonable. However, there is a slight increase in residual spread at higher fitted values. This mild shape that is being formed points to light heteroskedasticity, which mostly affects standard errors rather than the slope itself. You can see this plot below:
 
-```{r fig-diagnostics, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 2. Diagnostics: Residuals vs Fitted.", fig.pos='H', fig.width=6.2, fig.height=3.8}
+```{r fig-diagnostics, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 2. Diagnostics: Residuals vs Fitted.", fig.pos='H', out.width='80%', fig.align='center', fig.height=3.6, fig.width=6.0}
 
 m1 <- lm(gap_pct ~ est_population, data = cleaned_data)
-
-par(mfrow = c(1, 2))
-plot(m1, which = 1)  # Residuals vs Fitted
+par(mfrow = c(1,1))
+plot(m1, which = 1)
 ```
 
-My Normal Q–Q plot is close to the reference line with deviations at both tails. Overall though, these diagnostics are displaying results that indicate they are adequate support for a simple linear model. You can see this plot below:
+My Normal Q–Q plot is close to the reference line with deviations at both tails. Overall though, these diagnostics are displaying results that indicate they are adequate support for a simple linear model. The departures from the line at both tails likely reflects that there are a few areas with unusually large positive or negative residuals. You can see this plot below:
 
-```{r fig-diagnostics2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 3. Diagnostics: Normal Q–Q."}
-plot(m1, which = 2)  # Normal Q–Q
-par(mfrow = c(1, 1))
+```{r fig-diagnostics2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Figure 3. Diagnostics: Normal Q–Q.", fig.pos='H', out.width='80%', fig.align='center', fig.height=3.6, fig.width=6.0}
+
+par(mfrow = c(1,1))
+plot(m1, which = 2)   # Normal Q–Q
 ```
 
 **Potential limitations and pitfalls.**
 
-1. The data are projections for 2025, not actually collected counts.
-
-2. A single predictor almost certainly cannot fully explain what goes on behind these scenes for supply and demand of RNs, as there are many other factors that can go into affecting these needs (wages, amount of nearby hospitals, education).
-
-3. If for whatever reason the LA SPAs are not independent from one another, this could have affected my results and output.
+There was a couple limitations that I experienced while working with this data set, with the initial one I faced being that the data are projections for 2025, not actually collected counts. Another limitation is that for an issue like this, a single predictor almost certainly cannot fully explain what goes on behind these scenes for supply and demand of RNs, as there are many other factors that can go into affecting these needs (wages, amount of nearby hospitals, education). Finally, the other limitation this project is that if for whatever reason the LA SPAs are not independent from one another, this could have affected my results and output.
 
 **Possible extensions and improvements:**
 
@@ -195,6 +194,8 @@ To further examine robustness and improve fit, I decided on two possible extensi
 1. Re-fit with log(population) as the predictor to address possible curvature that may come from very large areas
 
 2. A counties-only model that excludes LA SPAs to examine the effect they may have when treated as a single county
+
+3. Run these same tests again at the end of 2025 once these data points have actually been collected and compare to these results from the predicted values.
 
 ---
 
@@ -205,3 +206,5 @@ Department of Health Care Access and Information (HCAI). (2025). Registered Nurs
 RDocumentation. (2025). RDocumentation. https://www.rdocumentation.org/
 
 Stack Overflow. (2025). Stack Overflow — Questions. https://stackoverflow.com/questions
+
+R Core Team (2025). R: A language and environment for statistical computing. Vienna, Austria: R Foundation for Statistical Computing. https://www.R-project.org/.
