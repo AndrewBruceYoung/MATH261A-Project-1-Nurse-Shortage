@@ -11,16 +11,16 @@ This project explores whether population size predicts the projected RN shortage
 ### Repository structure
 
 analysis/
-- Math261A-Project1-Analysis.R # data import, cleaning, model fit, plots
+- Math261A-Project1-Analysis.R                      # data import, cleaning, model fit, plots
 
 data/
-- 2025-registered-nurse-shortage-areas-raw.csv # raw data file acquired from CA.gov
-- 2025-registered-nurse-shortage-areas-cleaned.csv # cleaned data file
+- 2025-registered-nurse-shortage-areas-raw.csv      # raw data file acquired from CA.gov
+- 2025-registered-nurse-shortage-areas-cleaned.csv  # cleaned data file
 
 paper/
-- Math261A-Project1-Paper.Rmd # paper source
-- Math261A-Project1-Paper.pdf # knitted paper 
-- references.bib # BibTeX references
+- Math261A-Project1-Paper.Rmd                       # paper source
+- Math261A-Project1-Paper.pdf                       # knitted paper 
+- references.bib                                    # BibTeX references
 
 README.md
 
