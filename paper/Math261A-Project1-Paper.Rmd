@@ -45,7 +45,7 @@ Est. Population (renamed to est_population) is the estimated 2025 population in 
 
 Gap % (renamed to gap_pct) is the RN shortage gap percentage, defined as: 
 
-$gap % = ((supply - demand)/demand) * 100$
+gap % = $\frac{supply - demand}{demand} * 100$
 
 Negative values mean there is a shortage, positive values mean there is a surplus.
 
